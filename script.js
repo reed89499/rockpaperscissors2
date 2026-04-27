@@ -39,6 +39,7 @@ function playRound() {
             winner = 'user';
             userWins += 1;
             console.log('You won! You are at ' + userWins + ' wins, and the computer is at ' + computerWins + ' wins.');
+            return winner;
         } else {
             winner = 'computer';
             computerWins += 1;
@@ -46,8 +47,24 @@ function playRound() {
             return winner;
         }
     }
-
 }
+
+let totalWins = 0
+while (totalWins != 3) {
+    playRound();
+    if (computerWins > userWins) {
+        totalWins = computerWins;
+    } else {
+        totalWins = userWins;
+    }
+}
+
+if (userWins == 3) {
+    console.log('you won the game!');
+} else {
+    console.log('you lost the game.');
+}
+
 
 
 
