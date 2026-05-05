@@ -11,17 +11,19 @@ function genComputerChoice() {
     return computerChoice;
 }
 
-function getUserChoice() {
-    userChoice = '';
-    while (userChoice != 'rock' || userChoice != 'paper' || userChoice != 'scissors') {
-        userChoice = prompt("Please enter rock, paper or scissors.");
-        if (userChoice == 'rock' || userChoice == 'paper' || userChoice == 'scissors') {
-            return userChoice
-        } else {
-            console.log('You did not enter rock, paper or scissors');
-        }
-    }
-}
+let userChoice = ''
+
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        userChoice = button.textContent;
+        playRound();
+    });
+});
+
+const div = document.querySelector('div');
+const header = document.querySelector('h1');
 
 let userWins = 0;
 let computerWins = 0;
@@ -30,39 +32,24 @@ function playRound() {
     let winner = ''
     while (winner != 'computer' || winner != 'user') {
         let computerChoice = genComputerChoice();
-        console.log('The computer chose ' + computerChoice);
-        let userChoice = getUserChoice();
+        console.log(userChoice);
+        console.log(computerChoice);
+        header.textContent = 'The computer chose ' + computerChoice;
         if (userChoice == computerChoice) {
-            console.log('Tie, go again');
+            div.textContent = 'Tie, go again';
             continue;
         } else if (userChoice == 'rock' && computerChoice == 'scissors' || userChoice == 'paper' && computerChoice == 'rock' || userChoice == 'scissors' && computerChoice == 'paper') {
             winner = 'user';
             userWins += 1;
-            console.log('You won! You are at ' + userWins + ' wins, and the computer is at ' + computerWins + ' wins.');
+            div.textContent = 'You won! You are at ' + userWins + ' wins, and the computer is at ' + computerWins + ' wins.';
             return winner;
         } else {
             winner = 'computer';
             computerWins += 1;
-            console.log('You lost. You are at ' + userWins + ' wins, and the computer is at ' + computerWins + ' wins.');
+            div.textContent = 'You lost. You are at ' + userWins + ' wins, and the computer is at ' + computerWins + ' wins.';
             return winner;
         }
     }
-}
-
-let totalWins = 0
-while (totalWins != 3) {
-    playRound();
-    if (computerWins > userWins) {
-        totalWins = computerWins;
-    } else {
-        totalWins = userWins;
-    }
-}
-
-if (userWins == 3) {
-    console.log('you won the game!');
-} else {
-    console.log('you lost the game.');
 }
 
 
